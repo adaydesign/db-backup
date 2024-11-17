@@ -1,0 +1,21 @@
+{
+    "servers": [
+      {
+        "name": "database 1",
+        "user": "db_username",
+        "password": "db_password",
+        "host": "localhost",
+        "port": 3306,
+        "database": "db_name"
+      },
+      {
+        "name": "database 2",
+        "user": "db_username",
+        "password": "db_password",
+        "host": "localhost",
+        "port": 3306,
+        "database": "db_name"
+      }
+    ]
+  }
+  
