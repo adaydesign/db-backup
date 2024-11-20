@@ -1,7 +1,12 @@
 # Backup MYSQL/MariaDB File
 
-#### How to use
+## Update
+- 21/11/2024
+    - [New] project structure
+    - [Add] discord notification
+    - [Add] backup config : specify tables and ignore tables
 
+#### How to use
 ### 1. To Configuration
 You can config database connection in `config.json` file
 ```
@@ -12,6 +17,10 @@ You can config database connection in `config.json` file
     "host": "__host__",
     "port": 3306,
     "database": "__database name__"
+
+    "ignored_tables":["db_name.tbl_name1","db_name.tbl_name2"], // ignore dumping some tables
+    or
+    "tables":["tbl_name3"] // dump specify tables
 }
 ```
 
@@ -22,6 +31,9 @@ LOG_FOLDER=__Your log folder__
 OUTPUT_FOLDER=__Your backup folder__
 CONFIG_FILE=config.json
 KEY=__Key In Text Form___
+DISCORD_WEBHOOK=https://discord.com/api/webhooks/{webhooks.id}/{webhooks.token}
+DISCORD_BOT_NAME=__DISCORD_BOT_NAME__
+DISCORD_BOT_AVATAR=__DISCORD_BOT_AVATAR (image url)__
 ```
 
 ### 4. To Build
