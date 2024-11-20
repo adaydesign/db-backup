@@ -1,8 +1,8 @@
 package main
 
 import (
+	"db-backup/handlers"
 	"db-backup/models"
-	"db-backup/utils"
 	"encoding/json"
 	"flag"
 	"fmt"
@@ -91,7 +91,7 @@ func main() {
 		logger.Println("Backup process started")
 
 		// Generate an AES key (in production, save it securely)
-		key, err := utils.GenerateAESKey()
+		key, err := handlers.GenerateAESKey()
 		if err != nil {
 			logger.Fatalf("Error generating AES key: %v\n", err)
 		}
@@ -103,7 +103,7 @@ func main() {
 			var aResult models.ResultMessage
 			aResult.ServerName = server.Name
 			logger.Printf("Starting backup for server: %s\n", server.Name)
-			err := utils.BackupDatabase(server, logger, key, outputFolder)
+			err := handlers.BackupDatabase(server, logger, key, outputFolder)
 			if err != nil {
 				logger.Printf("Error backing up server '%s': %v\n", server.Name, err)
 				aResult.Success = false
@@ -115,7 +115,7 @@ func main() {
 
 			results = append(results, aResult)
 		}
-		errDiscord := utils.PostMessage(results)
+		errDiscord := handlers.PostMessage(results)
 		if errDiscord != nil {
 			logger.Println("Post to Discord : Fail - ", errDiscord)
 		} else {
@@ -128,7 +128,7 @@ func main() {
 			return
 		}
 
-		key, err := utils.GenerateAESKey()
+		key, err := handlers.GenerateAESKey()
 		if err != nil {
 			fmt.Printf("Error generating AES key: %v\n", err)
 			return
@@ -137,7 +137,7 @@ func main() {
 		// output file
 		outputFile := strings.Replace(*encryptedFile, ".enc", "", 1)
 
-		err = utils.DecryptFile(*encryptedFile, outputFile, key)
+		err = handlers.DecryptFile(*encryptedFile, outputFile, key)
 		if err != nil {
 			fmt.Printf("Error decrypting file: %v\n", err)
 		} else {
