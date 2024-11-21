@@ -135,7 +135,13 @@ func BackupDatabase(server models.ServerConfig, logger *log.Logger, key []byte, 
 	if err != nil {
 		return fmt.Errorf("error creating backup file: %v", err)
 	}
-	defer backupFile.Close()
+	// defer backupFile.Close()
+	// Properly close the file
+	defer func() {
+		if err := backupFile.Close(); err != nil {
+			logger.Printf(`error closing file: %v`, err)
+		}
+	}()
 
 	// Redirect command output to the file
 	cmd.Stdout = backupFile
